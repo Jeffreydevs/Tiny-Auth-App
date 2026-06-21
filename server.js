@@ -1,6 +1,6 @@
 const express = require("express");
+const User = require("./model/user")
 const app = express();
-const {email,password} = req.body
 
 app.use(express.json());
 
@@ -8,12 +8,21 @@ app.get("/",(req,res)=>{
     res.send("Hello Jeffrey")
 })
 
-app.post("/register",(req,res)=>{
+app.post("/register", async (req,res)=>{
    const {email,password} = req.body 
-    if(email===""||password === ""){
+
+   if(email===""||password === ""){
         return res.send("Please fill all fields")
     }
-    console.log("User can register")
+
+   const user = {
+        email,
+        password
+    }
+    console.log(user)
+
+    await User.create(user)
+
     res.send("Register route working");
 })
 
