@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("./model/user")
+const User = require("./model/user");
 const app = express();
 
 app.use(express.json());
@@ -9,13 +9,20 @@ app.get("/",(req,res)=>{
 })
 
 app.post("/register", async (req,res)=>{
-   const {email,password} = req.body 
 
-   if(email===""||password === ""){
+    const {email,password} = req.body;
+
+    if(email===""||password === ""){
         return res.send("Please fill all fields")
     }
 
-   const user = {
+    const existingUser = await User.findOne({email});
+
+    if (existingUser){
+        return res.send("Email already exists")
+    }
+
+    const user = {
         email,
         password
     }
