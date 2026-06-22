@@ -28,7 +28,12 @@ app.post("/register", async (req,res)=>{
     }
     console.log(user)
 
-    await User.create(user)
+    try{
+     await User.create(user)
+    }
+    catch{
+      res.send("Something went wrong")  
+    }
 
     res.send("Register route working");
 })
