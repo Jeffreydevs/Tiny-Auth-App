@@ -13,9 +13,12 @@ const User = require("./models/User");
 
 app.use(express.json());
 
-app.get("/profile", authMiddleware, (req,res)=>{
-    res.send(`Hello user ${req.user.id}`);
-})
+app.get("/profile", authMiddleware, async (req,res)=>{
+    const user = await User.findById(req.user.id);
+    res.json({
+      email: user.email  
+    });
+});
 
 app.post("/register", async (req,res)=>{
 
