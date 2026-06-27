@@ -7,12 +7,13 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 const app = express();
 const jwt = require("jsonwebtoken")
+const authMiddleware = require("./middleware/authMiddleware")
 
 const User = require("./models/User");
 
 app.use(express.json());
 
-app.get("/",(req,res)=>{
+app.get("/profile", authMiddleware, (req,res)=>{
     res.send("Hello Jeffrey")
 })
 
