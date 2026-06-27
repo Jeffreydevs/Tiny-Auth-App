@@ -14,7 +14,7 @@ const User = require("./models/User");
 app.use(express.json());
 
 app.get("/profile", authMiddleware, (req,res)=>{
-    res.send("Hello Jeffrey")
+    res.send(`Hello user ${req.user.id}`);
 })
 
 app.post("/register", async (req,res)=>{
@@ -73,7 +73,7 @@ app.post("/login", async (req, res) => {
         return res.send("Wrong password");
     }
 
-    const token = jwt.sign({ id: user._id }, "secretkey");
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.send(token);
    } 
 

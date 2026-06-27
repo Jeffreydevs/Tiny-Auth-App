@@ -6,8 +6,8 @@ const authMiddleware = (req, res, next) => {
  return res.send("Access denied");
  }
  try{
-  const decoded = jwt.verify(token,"secretkey"); 
-  console.log(token);
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  req.user = decoded; 
   next();
  } catch (error) {
     return res.send("Invalid token");
